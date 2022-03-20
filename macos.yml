@@ -1,0 +1,10 @@
+# TODO: Install homebrew
+
+- name: Install packages (MacOS)
+  community.general.homebrew:
+    name:
+      - zsh
+      - autojump
+      - htop
+      - chezmoi
+      - vim

@@ -1,0 +1,21 @@
+- name: Install packages (Debian)
+  become: true
+  apt: name={{item}}
+  with_items:
+    - zsh
+    - autojump
+    - htop
+    - curl
+    - vim
+
+- name: Change shell to ZSH
+  become: true
+  user:
+    name: sam
+    shell: /usr/bin/zsh
+
+- name: Install chezmoi
+  ansible.builtin.shell: 'sh -c "$(curl -fsLS chezmoi.io/get)"'
+  args:
+    chdir:
+    creates: /usr/local/bin/chezmoi

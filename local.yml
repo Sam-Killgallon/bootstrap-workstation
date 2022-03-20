@@ -1,5 +1,14 @@
 - hosts: localhost
-  become: true
+  gather_facts: true
+  connection: local
   tasks:
-  - name: Install zsh
-    apt: name=zsh
+    - import_tasks: "./debian.yml"
+      when: ansible_facts['os_family'] == "Debian"
+
+    - import_tasks: "./macos.yml"
+      when: ansible_facts['os_family'] == "Darwin"
+
+    - name: Run chezmoi
+      shell: "chezmoi init --apply sam-killgallon"
+      args:
+        creates: ~/.local/share/chezmoi
